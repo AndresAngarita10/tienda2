@@ -13,6 +13,18 @@ namespace Persistencia.Data.Configuration
             // utilizando el objeto 'builder'.
             builder.ToTable("persona");
 
+            builder.Property(p => p.IdPersona)
+            .IsRequired()
+            .HasMaxLength(50);
+
+            builder.Property(p => p.NombrePersona)
+            .IsRequired()
+            .HasMaxLength(50);
+
+            builder.Property(p => p.FechaNacimiento)
+            .IsRequired()
+            .HasColumnType("date");
+
             builder.HasOne(p => p.TipoPersona)
             .WithMany(p => p.Personas)
             .HasForeignKey(p => p.IdTipoPersonaFk);
@@ -38,6 +50,8 @@ namespace Persistencia.Data.Configuration
                     j.HasKey(t => new { t.IdProductoFk, t.IdPersonaFk});
                 }
             );
+
+
 
       /*       builder.HasKey(e => );
             builder.Property(e => ); */

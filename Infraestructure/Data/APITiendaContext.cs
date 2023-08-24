@@ -20,8 +20,8 @@ public class APITiendaContext : DbContext
     public DbSet<TipoPersona> TiposPersonas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {/* 
-        modelBuilder.Entity<ProductoPersona>().HasKey(p => p.Id); */
+    {
+        modelBuilder.Entity<TipoPersona>().HasKey(p => p.IdTPersona); 
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
