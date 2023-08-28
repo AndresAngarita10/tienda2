@@ -1,21 +1,27 @@
+using System.Security.Cryptography;
+using APITienda.Extensions;//----- para que se relacione el Cors de Extensions
 using Infraestructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 // Add services to the container.
+builder.Services.ConfigureCors(); //----- Se relaciona el Cors de Extensions
+builder.Services.AddControllers();
+builder.Services.AddAplicacionServices();//--------------
+
 builder.Services.AddDbContext<APITiendaContext>(OptionsBuilder => 
 {
     string ? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     OptionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
-builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
@@ -25,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("CorsPolicy");//----- Se relaciona el Cors de Extensions
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
