@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Security.Cryptography;
 using APITienda.Extensions;//----- para que se relacione el Cors de Extensions
 using Infraestructure.Data;
@@ -7,9 +8,10 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.ConfigureCors(); //----- Se relaciona el Cors de Extensions
+builder.Services.ConfigureCors(); //--------- Se relaciona el Cors de Extensions
 builder.Services.AddControllers();
-builder.Services.AddAplicacionServices();//--------------
+builder.Services.AddAplicacionServices();//-----------------
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly()); // -----------------------------------
 
 builder.Services.AddDbContext<APITiendaContext>(OptionsBuilder => 
 {
